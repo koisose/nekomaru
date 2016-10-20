@@ -10,7 +10,11 @@
   "license": "ISC",
   "dependencies": {
     "cf-deployment-tracker-client": "*",
+    "ejs": "^2.5.2",
     "express": "^4.14.0",
+    "node-horseman": "^3.1.1",
+    "phantomjs-prebuilt": "^2.1.13",
+    "socket.io": "^1.5.0",
     "tempmail.js": "^0.2.1"
   }
 }
