@@ -7,7 +7,7 @@ var koneksi=require('./koneksi')
 app.set('view engine', 'jade')
 app.set("views", __dirname + "/views");
 app.use(express.static(__dirname + '/public'));
-var port = process.env.VCAP_APP_PORT || 8080;
+var port = process.env.VCAP_APP_PORT || process.env.PORT;
 app.get("/", function (req,res) {
     res.render("sampan");
 });
