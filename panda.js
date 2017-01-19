@@ -1,47 +1,41 @@
-var Horseman = require('node-horseman');
-var horseman = new Horseman({phantomPath:"node_modules/phantomjs-prebuilt/bin/phantomjs",
-    injectJquery:true
+var fs = require('fs');
+var text2png = require('text2png');
+var axios=require('axios');
+var price={};
+var dateFormat = require('dateformat');
+var now = new Date();
+var facebook=require("./facebook")
+
+module.exports=function bismillah(){
+axios.get("http://dev.markitondemand.com/MODApis/Api/v2/Quote/json?symbol=IBM")
+.then((res)=>{
+    price.ibm=res.data.Symbol+" : "+res.data.LastPrice+"$ / Change : "+res.data.Change+"\n";
+getUp("https://api.bitfinex.com/v1/pubticker/zecusd",function(data){
+    price.zec="ZEC :"+data.last_price+"$ / volume : "+data.volume+"\n";
+    getUp("https://api.bitfinex.com/v1/pubticker/btcusd",function(data){
+    price.btc="BTC :"+data.last_price+"$ / volume : "+data.volume+"\n";
+    pandausd(dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT\n")+price.ibm+price.zec+price.btc )
+})
+})    
+})
+.catch((err)=>{
+    console.log(err)
 });
-var express=require('express')
-var app = express();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
+}
 
-app.set("view engine", "ejs");
-app.set("views", __dirname + "/views");
-app.set("view options", { layout: false } );
-app.use(express.static('public'));
-
-app.get('/', function(req, res) {
-horseman
-    .open('https://www.instagram.com')
-    .screenshot("public/panda.png")
-  .wait(5000)
-  .type('input[name="username"]', 'pekalonganpanda')
-  .type('input[name="fullName"]', 'pekalongan lucu')
-   .type('input[name="email"]', 'Funition@rhyta.com')
-  .type('input[name="password"]', 'plokotoklucu')
-   .wait(5000)
-   .evaluate( function(selector){
-     $(selector).eq(1).click()
-         }, 'button')
-   .wait(10000)
-     .screenshot("public/big.png")
-  .then(function(){
-       res.render('index',{image:"big.png"});
-  })
-  .catch(function(err){
-      res.render('index',{image:"panda.png"});
-      console.log(err)
-  })
+function getUp(site,panda){
+    axios.get(site)
+.then((res)=>{
+    panda(res.data);
+    
+})
+.catch((err)=>{
+    console.log(err)
+});
+}
+function pandausd(isi,panda){
+    fs.writeFileSync('public/out.png', text2png(isi,{bgColor: 'linen', lineSpacing: 10,
+  padding: 20}))
+facebook.postingGroup("http://pandamonium1.mybluemix.net/out.png","")
   
-						  
-});
-io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    //console.log(data);
-  });
-});
-server.listen(process.env.PORT);
-console.log('listening on port '+process.env.PORT);
+}

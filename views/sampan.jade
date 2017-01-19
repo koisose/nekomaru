@@ -1,0 +1,25 @@
+html
+  body
+    title kekuatan
+    script(src='/socket.io/socket.io.js')
+    script(src='https://code.jquery.com/jquery-3.1.1.min.js')
+    script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js")
+    div(ng-app="panda")
+     div(ng-controller="cipo")
+      button(ng-click="lambda()",ng-disabled="coki") start
+    img#ciki
+    p#canda
+    script.
+      var socket = io();
+      var app=angular.module("panda",[])
+      app.controller("cipo",function($scope,$http){
+        $scope.lambda=function(){
+          $scope.coki=true;
+        };
+      });
+      socket.on("dalbo",function(data){
+      $("#canda").text(JSON.stringify(data));
+      });
+      socket.on("news",function(data){
+        $("#ciki").attr("src","data:image/png;base64,"+data.hello);
+      });

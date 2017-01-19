@@ -1,0 +1,123 @@
+module.exports=function(io,email,namaDepan,namaBelakang){
+var Horseman = require('node-horseman');
+var horseman = new Horseman({phantomPath:"node_modules/phantomjs-prebuilt/bin/phantomjs"});
+horseman
+//.userAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.71 Safari/537.36')
+.open('https://console.ng.bluemix.net/')
+.wait(10000)
+.screenshotBase64("PNG")//
+.then(function(data){
+  io.emit("news",{hello:data})
+})
+.catch(function(err){
+  console.log(err)//
+})
+.click(".bx--btn.global-header__whitespace")
+.wait(10000)
+.screenshotBase64("PNG")//
+.then(function(data){
+  io.emit("news",{hello:data})
+})
+.catch(function(err){
+  console.log(err)//
+})
+.type("#email-input",email)
+.wait(10000)
+.screenshotBase64("PNG")//
+.then(function(data){
+  io.emit("news",{hello:data})
+})
+.catch(function(err){
+  console.log(err)//
+})
+.keyboardEvent('keypress',16777221)
+.wait(10000)
+.screenshotBase64('PNG')
+.then(function(data){
+  io.emit("news",{hello:data})
+})
+.catch(function(err){
+  console.log(err)
+})
+.type("#firstName-input",namaDepan)
+.wait(10000)
+.screenshotBase64("PNG")//
+.then(function(data){
+  io.emit("news",{hello:data})
+})
+.catch(function(err){
+  console.log(err)//
+})
+.type("#lastName-input",namaBelakang)
+.wait(10000)
+.screenshotBase64("PNG")//
+.then(function(data){
+  io.emit("news",{hello:data})
+})
+.catch(function(err){
+  console.log(err)//
+})
+.type("#company-input",namaDepan+namaBelakang)
+.wait(10000)
+.screenshotBase64("PNG")//
+.then(function(data){
+  io.emit("news",{hello:data})
+})
+.catch(function(err){
+  console.log(err)//
+})
+.type("#phoneNumber-input","14702366508")
+.wait(10000)
+.screenshotBase64("PNG")//
+.then(function(data){
+  io.emit("news",{hello:data})
+})
+.catch(function(err){
+  console.log(err)//
+})
+.type("#password-input","Pl0k0t0klucu-")
+.wait(10000)
+.screenshotBase64("PNG")//
+.then(function(data){
+  io.emit("news",{hello:data})
+})
+.catch(function(err){
+  console.log(err)//
+})
+.type("#secondPassword-input","Pl0k0t0klucu-")
+.wait(10000)
+.screenshotBase64("PNG")//
+.then(function(data){
+  io.emit("news",{hello:data})
+})
+.catch(function(err){
+  console.log(err)//
+})
+.click('input[name="NC_CHECK_EMAIL"]')
+.wait(10000)
+.screenshotBase64('PNG')
+.then(function(data){
+  io.emit("news",{hello:data})
+})
+.catch(function(err){
+  console.log(err)
+})
+.click('input[name="NC_CHECK_PHONE"]')
+.wait(10000)
+.screenshotBase64('PNG')
+.then(function(data){
+  io.emit("news",{hello:data})
+})
+.catch(function(err){
+  console.log(err)
+})
+.keyboardEvent('keypress',16777221)
+.wait(10000)
+.screenshotBase64('PNG')
+.then(function(data){
+  io.emit("news",{hello:data})
+})
+.catch(function(err){
+  console.log(err)
+})
+}

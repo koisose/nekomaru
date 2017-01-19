@@ -1,0 +1,26 @@
+title semua
+script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.min.js")
+script(src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.js")
+div(ng-app="panda",ng-controller="preman")
+    ul
+     -for panda in semuaKoleksi
+      -if(panda=="system.indexes") continue;
+      -else
+      
+      li 
+       a(href="#",ng-click="tabel('"+panda+"',{})")=panda 
+       button(ng-click="delete('"+panda+"')") delete
+    table(border="1")
+     thead
+      th(ng-repeat="(key,value) in isiField[0]") {{key }}
+      
+     tbody
+       | {{isiField.length==0 ? "tidak ada data" : ""}}
+      tr(ng-repeat="panda in isiField")
+       td(ng-repeat="i in panda")  {{i}}
+       td 
+        form(action="/delete",method="post")
+         input(type="hidden",value="{{flame}}",name="nama")
+         input(type="hidden",value="{{panda._id}}",name="kondisi")
+         input(type="submit",value="delete") 
+script(src="js/semua.js")
