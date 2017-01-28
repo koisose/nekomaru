@@ -1,35 +1,33 @@
-module.exports=function(io,email){
-  console.log(email)
-  var faker=require('faker')
-var Horseman = require('node-horseman');
+module.exports=function(email2,email,io){
+    var Horseman = require('node-horseman');
 var horseman = new Horseman({phantomPath:"node_modules/phantomjs-prebuilt/bin/phantomjs"});
 horseman
 //.userAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.71 Safari/537.36')
-.open('https://console.eu-gb.bluemix.net/')
+.open(email)
 .wait(10000)
 .screenshotBase64("PNG")//
 .then(function(data){
-  console.log("membuka bluemix")
+  console.log("menuju email verifikasi ")
   io.emit("news",{hello:data})
 })
 .catch(function(err){
   console.log(err)//
 })
-.click(".bx--btn.global-header__whitespace")
-.wait(10000)
+.click(".bluemix-login-link")
+.wait(15000)
 .screenshotBase64("PNG")//
 .then(function(data){
-  console.log("mengklik button sign up")
+  console.log("menekan link login")
   io.emit("news",{hello:data})
 })
 .catch(function(err){
   console.log(err)//
 })
-.type("#email-input",email)
+.type("#username",email2)
 .wait(10000)
 .screenshotBase64("PNG")//
 .then(function(data){
-  console.log("memasukkan email "+email)
+  console.log("memasukkan username")
   io.emit("news",{hello:data})
 })
 .catch(function(err){
@@ -45,47 +43,7 @@ horseman
 .catch(function(err){
   console.log(err)
 })
-.type("#firstName-input",faker.name.firstName())
-.wait(10000)
-.screenshotBase64("PNG")//
-.then(function(data){
-  console.log("memasukkan nama depan "+faker.name.firstName())
-  io.emit("news",{hello:data})
-})
-.catch(function(err){
-  console.log(err)//
-})
-.type("#lastName-input",faker.name.lastName())
-.wait(10000)
-.screenshotBase64("PNG")//
-.then(function(data){
-  console.log("memasukkan nama belakang "+faker.name.lastName())
-  io.emit("news",{hello:data})
-})
-.catch(function(err){
-  console.log(err)//
-})
-.type("#company-input",faker.name.firstName()+faker.name.lastName())
-.wait(10000)
-.screenshotBase64("PNG")//
-.then(function(data){
-  console.log("memasukkan perusahaan "+faker.name.firstName()+faker.name.lastName())
-  io.emit("news",{hello:data})
-})
-.catch(function(err){
-  console.log(err)//
-})
-.type("#phoneNumber-input","12363170977")
-.wait(10000)
-.screenshotBase64("PNG")//
-.then(function(data){
-  console.log("memasukkan nomer telepon 12363170977")
-  io.emit("news",{hello:data})
-})
-.catch(function(err){
-  console.log(err)//
-})
-.type("#password-input","Pl0k0t0klucu-")
+.type("#password","Pl0k0t0klucu-")
 .wait(10000)
 .screenshotBase64("PNG")//
 .then(function(data){
@@ -95,11 +53,31 @@ horseman
 .catch(function(err){
   console.log(err)//
 })
-.type("#secondPassword-input","Pl0k0t0klucu-")
-.wait(10000)
+.keyboardEvent('keypress',16777221)
+.wait(20000)
+.screenshotBase64('PNG')
+.then(function(data){
+  console.log("menekan enter")
+  io.emit("news",{hello:data})
+})
+.catch(function(err){
+  console.log(err)
+})
+.type("#onboard__input-orgname",email.split("@")[0])
+.wait(20000)
 .screenshotBase64("PNG")//
 .then(function(data){
-  console.log("memasukkan password 2")
+  console.log("input organisasi")
+  io.emit("news",{hello:data})
+})
+.catch(function(err){
+  console.log(err)//
+})
+.type("#onboard__input-spacename","dev")
+.wait(20000)
+.screenshotBase64("PNG")//
+.then(function(data){
+  console.log("input spacename")
   io.emit("news",{hello:data})
 })
 .catch(function(err){
@@ -109,11 +87,28 @@ horseman
 .wait(10000)
 .screenshotBase64('PNG')
 .then(function(data){
-  console.log("menekan enter dan menunggu email dari bluemix lanjut part 2")
+  console.log("menekan enter")
   io.emit("news",{hello:data})
 })
 .catch(function(err){
   console.log(err)
+})
+.click(".onboard__suggestion--name")
+.wait(15000)
+.screenshotBase64("PNG")//
+.then(function(data){
+  console.log("menekan ready")
+  io.emit("news",{hello:data})
+  var koneksi=require("./koneksi")
+  var pushibm=require("./pushibm")
+  var postmark=require("./postmark")
+  koneksi.cari("ibm",{},function(data){
+    pushibm(data[data.length-1].email,data[data.length-1].nama)
+    postmark.deleteServer(data[data.length-1].ID)
+  })
+})
+.catch(function(err){
+  console.log(err)//
 })
 .close()
 }

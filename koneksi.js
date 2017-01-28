@@ -1,4 +1,4 @@
-var url = 'mongodb://spiritbro:1234@ds050869.mlab.com:50869/panda';
+var url = 'mongodb://panda:123456@gcp-us-east1-cpu.1.dblayer.com:15445,gcp-us-east1-cpu.0.dblayer.com:15445/ibm?ssl=true';
 var collections = []
 var mongojs=require("mongojs")
 var db = mongojs(url,collections);

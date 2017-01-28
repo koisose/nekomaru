@@ -36,6 +36,7 @@ function getUp(site,panda){
 function pandausd(isi,panda){
     fs.writeFileSync('public/out.png', text2png(isi,{bgColor: 'linen', lineSpacing: 10,
   padding: 20}))
-facebook.postingGroup("http://pandamonium1.mybluemix.net/out.png","")
+var twitter=require("./twitter")
+twitter(isi)
   
 }

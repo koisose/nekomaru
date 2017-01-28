@@ -2,13 +2,13 @@ var axios=require('axios')
 //mendaptkan id email
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.post['Accept'] = 'application/json';
-axios.defaults.headers.post['X-Postmark-Account-Token'] = 'b927506f-bf31-4405-bff4-c90cd5394d36';
+axios.defaults.headers.post['X-Postmark-Account-Token'] = '39a15f25-e2ec-4d0d-8c64-c29d9c5f411a';
 var dataServer=[]
 //mendapatkan server
 var mendapatkanServer=function mendapatkanServer(){
 axios.get('https://api.postmarkapp.com/servers?count=50&offset=0', {
   headers:{
-      "X-Postmark-Account-Token":"b927506f-bf31-4405-bff4-c90cd5394d36"
+      "X-Postmark-Account-Token":"39a15f25-e2ec-4d0d-8c64-c29d9c5f411a"
   }
 })
   .then(function (response) {
@@ -44,15 +44,15 @@ var editServer=function editServer(token,inbound){
   })
 }
   //untuk membuat server
-  var buatServer=function buatServer(nama){
+  var buatServer=function buatServer(nama,selesai){
   axios.post('https://api.postmarkapp.com/servers', {
       "Name":nama,
       "Color":"Green",
-      "InboundHookUrl":"http://suku-spiritbro.c9users.io/postmark"
+      "InboundHookUrl":"http://suku-cloned-spiritbro.c9users.io/postmark"
   }
 )
   .then(function (response) {
-    console.log(response.data)
+    selesai({ID:response.data.ID,InboundAddress:response.data.InboundAddress})
     })
       .catch(function (error) {
     console.log(error);

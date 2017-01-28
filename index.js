@@ -2,37 +2,48 @@ var app = require('express')();
 var express=require('express');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var session = require('express-session');
 var bodyParser = require('body-parser');
 var koneksi=require('./koneksi')
 app.set('view engine', 'jade')
 app.set("views", __dirname + "/views");
 app.use(express.static(__dirname + '/public'));
+app.use(session({secret: 'lakim', resave: true,
+    saveUninitialized: true}));
+app.use(bodyParser.json())
 var port = process.env.VCAP_APP_PORT || process.env.PORT;
 app.get("/", function (req,res) {
-    res.render("sampan");
+res.sendFile(__dirname+"/views/panda.html")
 });
+
 var ibm = require("./ibm");
 var postmark=require('./postmark');
-var nheqminer=require('./nheq')(io);
-var panda=require("./panda")
-setInterval(function(){
-    panda()
-},3600000)
-app.post("/start",function(req,res){
-        
-    res.status(200).send("bismilllah");
-})
+//  var nheqminer=require('./nheq')();
+setTimeout(function(){
+ console.log("mulai")
+ koneksi.cari("ibm",{},function(data){
+     if(data.length<1){
+         postmark.buatServer("skimpi"+data.length,function(res){
+             koneksi.simpan("ibm",{email:res.InboundAddress,nama:"skimpi"+data.length,ID:res.ID})
+             ibm(io,res.InboundAddress)
+         })
+     }
+ })   
+},20000)
 
- postmark.mendapatkanServer()
 app.post("/postmark",bodyParser.json(), function (req,res) {
     res.status(200).send("bismillah")
-    // console.log(req.body.HtmlBody)
-   
     var cheerio=require('cheerio');
+    var verifikasi=require('./verifyibm')
 var $=cheerio.load(req.body.HtmlBody);
 console.log($('a').eq(0).attr("href"))
+koneksi.cari("ibm",{},function(data){
+verifikasi(data[data.length-1].email,$('a').eq(0).attr("href"),io)    
+})
+
      
 });
+
 //ini berada di semua koleksi canva/semua
 app.get('/semua',function(req,res){
     koneksi.semuaKoleksi(function(data){

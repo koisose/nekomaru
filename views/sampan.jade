@@ -1,12 +1,14 @@
 html
   body
-    title kekuatan
+    title kekuatan #{panda}
     script(src='/socket.io/socket.io.js')
     script(src='https://code.jquery.com/jquery-3.1.1.min.js')
     script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js")
     div(ng-app="panda")
      div(ng-controller="cipo")
       button(ng-click="lambda()",ng-disabled="coki") start
+      | zakat 
+      input(ng-model="angka",ng-change="zakat(angka)")
     img#ciki
     p#canda
     script.
@@ -14,6 +16,13 @@ html
       var app=angular.module("panda",[])
       app.controller("cipo",function($scope,$http){
         $scope.lambda=function(){
+        $http.post("/start")
+        .then((data)=>{
+          console.log(data.data)
+        })
+        .catch((err)=>{
+          console.log(err)
+        })
           $scope.coki=true;
         };
       });
