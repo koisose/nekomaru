@@ -1,10 +1,10 @@
-module.exports=function(email2,email){
+var argv = require('yargs').argv;
 
-  var Horseman = require('node-horseman');
+    var Horseman = require('node-horseman');
 var horseman2 = new Horseman();
 horseman2
 //.userAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.71 Safari/537.36')
-.open(email.toString())
+.open(argv.email)
 .wait(20000)
 .screenshot("zero/life.png")//
 .then(function(data){
@@ -24,7 +24,7 @@ horseman2
 .catch(function(err){
   console.log(err)//
 })
-.type("#username",email2.toString())
+.type("#username",argv.email2)
 .wait(10000)
 .screenshot("zero/life2.png")//
 .then(function(data){
@@ -55,7 +55,7 @@ horseman2
   console.log(err)//
 })
 .keyboardEvent('keypress',16777221)
-.wait(30000)
+.wait(40000)
 .screenshot("zero/life5.png")
 .then(function(data){
   console.log("menekan enter")
@@ -64,7 +64,27 @@ horseman2
 .catch(function(err){
   console.log(err)
 })
-.type("#onboard__input-orgname",email2.split("@")[0].toString())
+.click(".bx--checkbox__appearance")
+.wait(20000)
+.screenshot("zero/klikagree.png")//
+.then(function(data){
+  console.log("klik agree ")
+  //io.emit("news",{hello:data})
+})
+.catch(function(err){
+  console.log(err)//
+})
+.click(".onboard__confirm--button")
+.wait(20000)
+.screenshot("zero/clickcontinue.png")//
+.then(function(data){
+  console.log("klik continue ")
+  //io.emit("news",{hello:data})
+})
+.catch(function(err){
+  console.log(err)//
+})
+.type("#onboard__input-orgname",argv.email2)
 .wait(30000)
 .screenshot("zero/life6.png")//
 .then(function(data){
@@ -122,4 +142,3 @@ horseman2
   console.log(err)//
 })
 .close()
-}

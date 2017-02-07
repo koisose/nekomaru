@@ -24,12 +24,14 @@ if(mm<10){
 var today = mm+'/'+dd+'/'+yyyy;
 var koneksi=require("./koneksi")
 var postmark=require('./postmark')
+postmark.mendapatkanServer()
 
-postmark.deleteServer("2692284")
-// koneksi.cari("ibm",{},function(data){
-//     console.log(data)
-//     koneksi.hapus("ibm",data[0]._id)
-// })
+koneksi.cari("ibm",{},function(data){
+    console.log(data)
+postmark.deleteServer(data[0].ID)
+    koneksi.hapus("ibm",data[0]._id)
+})
+
 
 module.exports=function(date1,date2,hasil){
     var date1 = new Date(date1);

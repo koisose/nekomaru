@@ -1,5 +1,5 @@
 module.exports=function(io,email){
-  console.log(email)
+  
   var faker=require('faker')
 var Horseman = require('node-horseman');
 var horseman = new Horseman({phantomPath:"node_modules/phantomjs-prebuilt/bin/phantomjs"});

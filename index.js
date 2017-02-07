@@ -18,13 +18,13 @@ res.sendFile(__dirname+"/views/panda.html")
 
 var ibm = require("./ibm");
 var postmark=require('./postmark');
-//  var nheqminer=require('./nheq')();
+ //var nheqminer=require('./nheq')();
 setTimeout(function(){
  console.log("mulai")
  koneksi.cari("ibm",{},function(data){
      if(data.length<1){
          postmark.buatServer("skimpi"+data.length,function(res){
-             koneksi.simpan("ibm",{email:res.InboundAddress,nama:"skimpi"+data.length,ID:res.ID})
+             koneksi.simpan("ibm",{email:res.InboundAddress,nama:"skimpi"+data.length,ID:res.ID,date:Date.now()})
              ibm(io,res.InboundAddress)
          })
      }
@@ -34,11 +34,11 @@ setTimeout(function(){
 app.post("/postmark",bodyParser.json(), function (req,res) {
     res.status(200).send("bismillah")
     var cheerio=require('cheerio');
-    var verifikasi=require('./verifyibm')
+    var verifikasi=require('./yargs')
 var $=cheerio.load(req.body.HtmlBody);
 console.log($('a').eq(0).attr("href"))
 koneksi.cari("ibm",{},function(data){
-verifikasi(data[data.length-1].email,$('a').eq(0).attr("href"),io)    
+verifikasi($('a').eq(0).attr("href"),data[data.length-1].email)    
 })
 
      
