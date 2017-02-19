@@ -1,10 +1,10 @@
 module.exports=function(email2,email){
 
-  var Horseman = require('node-horseman');
-var horseman2 = new Horseman();
-horseman2
+ var Nightmare = require('nightmare');       
+var nightmare = Nightmare({ show:false });
+nightmare
 //.userAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.71 Safari/537.36')
-.open(email.toString())
+.goto(email.toString())
 .wait(20000)
 .screenshot("zero/life.png")//
 .then(function(data){
@@ -34,7 +34,7 @@ horseman2
 .catch(function(err){
   console.log(err)//
 })
-.keyboardEvent('keypress',16777221)
+.type('body', '000d')
 .wait(10000)
 .screenshot("zero/life3.png")
 .then(function(data){
@@ -54,7 +54,7 @@ horseman2
 .catch(function(err){
   console.log(err)//
 })
-.keyboardEvent('keypress',16777221)
+.type('body', '000d')
 .wait(30000)
 .screenshot("zero/life5.png")
 .then(function(data){
@@ -63,6 +63,26 @@ horseman2
 })
 .catch(function(err){
   console.log(err)
+})
+.click(".bx--checkbox__appearance")
+.wait(20000)
+.screenshot("zero/klikagree.png")//
+.then(function(data){
+  console.log("klik agree ")
+  //io.emit("news",{hello:data})
+})
+.catch(function(err){
+  console.log(err)//
+})
+.click(".onboard__confirm--button")
+.wait(20000)
+.screenshot("zero/clickcontinue.png")//
+.then(function(data){
+  console.log("klik continue ")
+  //io.emit("news",{hello:data})
+})
+.catch(function(err){
+  console.log(err)//
 })
 .type("#onboard__input-orgname",email2.split("@")[0].toString())
 .wait(30000)
@@ -74,7 +94,7 @@ horseman2
 .catch(function(err){
   console.log(err)//
 })
-.keyboardEvent('keypress',16777221)
+.type('body', '000d')
 .wait(30000)
 .screenshot("zero/life7.png")
 .then(function(data){
@@ -94,7 +114,7 @@ horseman2
 .catch(function(err){
   console.log(err)//
 })
-.keyboardEvent('keypress',16777221)
+.type('body', '000d')
 .wait(30000)
 .screenshot("zero/life9.png")
 .then(function(data){

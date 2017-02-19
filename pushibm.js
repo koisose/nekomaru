@@ -22,7 +22,7 @@ push(appname)
 
 function push(appname){
   const spawn = require('child_process').spawn;
-const ls = spawn('./cf', ['push',appname]);
+const ls = spawn('./cf', ['push',appname,'-m','2GB']);
 
 //fd4b8428f8ec8159ea1ed14f5f137f10@inbound.postmarkapp.com
 

@@ -24,19 +24,17 @@ if(mm<10){
 var today = mm+'/'+dd+'/'+yyyy;
 var koneksi=require("./koneksi")
 var postmark=require('./postmark')
-postmark.mendapatkanServer()
-
-koneksi.cari("ibm",{},function(data){
-    console.log(data)
-postmark.deleteServer(data[0].ID)
-    koneksi.hapus("ibm",data[0]._id)
-})
 
 
-module.exports=function(date1,date2,hasil){
+
+var sisatanggal=function(date1,date2,hasil){
     var date1 = new Date(date1);
 var date2 = new Date(date2);
 var timeDiff = Math.abs(date2.getTime() - date1.getTime());
 var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
 hasil(diffDays);
+}
+module.exports={
+    sisatanggal:sisatanggal,
+    tanggal:today,
 }

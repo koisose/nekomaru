@@ -5,10 +5,11 @@ var axios=require("axios")
 var getFeed=function(){
     axios.get('https://graph.facebook.com/v2.8/me/feed',{params:{
  access_token:token,
+ limit:1000000,
 }})
 .then(function(data)
 {
-  console.log(data.data);
+  console.log(data.data.data.length);
   
 }).catch((err)=>{
     console.log(err)
@@ -59,20 +60,81 @@ caption:lambda,
     console.log(err)
 })
 }
+ var getGroup=function(){
+     axios.get('https://graph.facebook.com/v2.8/me/groups',{params:{
+ access_token:token,
+ limit:1000000,
+}})
+.then(function(data)
+{
+  console.log(data.data);
+  
+}).catch((err)=>{
+    console.log(err)
+})   
+ }
+ //1233064896770552
+ var getGroupFeeds=function(){
+      axios.get('https://graph.facebook.com/v2.8/1233064896770552/feed',{params:{
+ access_token:token,
+ limit:5,
+}})
+.then(function(data)
+{
+  console.log(data.data);
+  
+}).catch((err)=>{
+    console.log(err)
+})   
+ }
+var postComments=function(message,panda){
+     axios.post('https://graph.facebook.com/v2.8/1233064896770552_1233064900103885/comments',{
+ access_token:token,
+message:message,
+ 
+})
+.then(function(data)
+{
+  panda(data.data);
+  
+}).catch((err)=>{
+    console.log(err)
+})  
+}
+var getComments=function(panda){
+      axios.get('https://graph.facebook.com/v2.8/1233064896770552_1233064900103885/comments',{params:{
+ access_token:token,
+ limit:5,
+}})
+.then(function(data)
+{
+  panda(data.data);
+  
+}).catch((err)=>{
+    console.log(err)
+})   
+ }
+ var deleteComment=function(id){
+       axios.delete('https://graph.facebook.com/v2.8/'+id,{params:{
+ access_token:token,
 
+}})
+.then(function(data)
+{
+console.log("berhasil mendelete")
+  
+}).catch((err)=>{
+    console.log(err)
+})  
+ }
 module.exports={postingGroup:postingGroup,
     postingSendiri:postingSendiri,
     editPosting:editPosting,
     getFeed:getFeed,
+    getGroup:getGroup,
+    getGroupFeeds:getGroupFeeds,
+    getComments:getComments,
+    postComments:postComments,
+    deleteComment:deleteComment,
 }
 
-//   .catch(function(err){console.log(err);})
-// axios.get('https://graph.facebook.com/v2.8/me/accounts',{
-//  params:{access_token:token,}
-//  })
-// .then(function(data)
-// {
-//   console.log(data.data);
-  
-// })
-//   .catch(function(err){console.log(err);})

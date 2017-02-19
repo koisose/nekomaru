@@ -44,11 +44,11 @@ var editServer=function editServer(token,inbound){
   })
 }
   //untuk membuat server
-  var buatServer=function buatServer(nama,selesai){
+  var buatServer=function buatServer(nama,inbound,selesai){
   axios.post('https://api.postmarkapp.com/servers', {
       "Name":nama,
       "Color":"Green",
-      "InboundHookUrl":"http://suku-cloned-spiritbro.c9users.io/postmark"
+      "InboundHookUrl":inbound
   }
 )
   .then(function (response) {
