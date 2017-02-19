@@ -11,7 +11,7 @@ nightmare
 .wait(5000)
 .screenshot("lakim/panda.png")//
 .click(".bx--btn.global-header__whitespace")
-.wait(10000)
+.wait(10000)//
 .screenshot("lakim/panda1.png")//
 .type("#email-input",email)
 .wait(10000)
