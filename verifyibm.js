@@ -1,136 +1,41 @@
-module.exports=function(email2,email){
+module.exports=panda
+function panda(email2,email){
 
- var Nightmare = require('nightmare');       
-var nightmare = Nightmare({ show:false });
+ var Nightmare = require('nightmare');
+var nightmare = Nightmare({ show:true});
 nightmare
 //.userAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.71 Safari/537.36')
-.goto(email.toString())
-.wait(20000)
-.screenshot("zero/life.png")//
-.then(function(data){
-  console.log("menuju email verifikasi ")
-  //io.emit("news",{hello:data})
-})
-.catch(function(err){
-  console.log(err)//
-})
+.goto(email)
+.wait(5000)
 .click(".bluemix-login-link")
 .wait(15000)
-.screenshot("zero/life1.png")//
-.then(function(data){
-  console.log("menekan link login")
-  //io.emit("news",{hello:data})
-})
-.catch(function(err){
-  console.log(err)//
-})
-.type("#username",email2.toString())
+.type("#username",email2)
 .wait(10000)
-.screenshot("zero/life2.png")//
-.then(function(data){
-  console.log("memasukkan username")
-  //io.emit("news",{hello:data})
-})
-.catch(function(err){
-  console.log(err)//
-})
-.type('body', '000d')
+.click('#continuebutton')
 .wait(10000)
-.screenshot("zero/life3.png")
-.then(function(data){
-  console.log("menekan enter")
-  //io.emit("news",{hello:data})
-})
-.catch(function(err){
-  console.log(err)
-})
 .type("#password","Pl0k0t0klucu-")
 .wait(10000)
-.screenshot("zero/life4.png")//
-.then(function(data){
-  console.log("memasukkan password")
-  //io.emit("news",{hello:data})
-})
-.catch(function(err){
-  console.log(err)//
-})
-.type('body', '000d')
-.wait(30000)
-.screenshot("zero/life5.png")
-.then(function(data){
-  console.log("menekan enter")
-  //io.emit("news",{hello:data})
-})
-.catch(function(err){
-  console.log(err)
-})
+.click('#signinbutton')
+.wait(20000)
 .click(".bx--checkbox__appearance")
+.wait(5000)
+.click(".button__termAccept")
 .wait(20000)
-.screenshot("zero/klikagree.png")//
-.then(function(data){
-  console.log("klik agree ")
-  //io.emit("news",{hello:data})
-})
-.catch(function(err){
-  console.log(err)//
-})
-.click(".onboard__confirm--button")
-.wait(20000)
-.screenshot("zero/clickcontinue.png")//
-.then(function(data){
-  console.log("klik continue ")
-  //io.emit("news",{hello:data})
-})
-.catch(function(err){
-  console.log(err)//
-})
 .type("#onboard__input-orgname",email2.split("@")[0].toString())
-.wait(30000)
-.screenshot("zero/life6.png")//
-.then(function(data){
-  console.log("input organisasi")
-  //io.emit("news",{hello:data})
-})
-.catch(function(err){
-  console.log(err)//
-})
-.type('body', '000d')
-.wait(30000)
-.screenshot("zero/life7.png")
-.then(function(data){
-  console.log("menekan enter")
-  //io.emit("news",{hello:data})
-})
-.catch(function(err){
-  console.log(err)
-})
+.select(".onboard__region-select","eu-gb")
+.wait(10000)
+.click('.onboard__input-org-advance')
+.wait(10000)
 .type("#onboard__input-spacename","dev")
-.wait(30000)
-.screenshot("zero/life8.png")//
-.then(function(data){
-  console.log("input spacename")
-  //io.emit("news",{hello:data})
-})
-.catch(function(err){
-  console.log(err)//
-})
-.type('body', '000d')
-.wait(30000)
-.screenshot("zero/life9.png")
-.then(function(data){
-  console.log("menekan enter")
-  //io.emit("news",{hello:data})
-})
-.catch(function(err){
-  console.log(err)
-})
+.wait(10000)
+.click('.onboard__input-space-advance')
+.wait(10000)
 .click(".onboard__suggestion--name")
 .wait(15000)
-.screenshot("zero/life10.png")//
+.end()
 .then(function(data){
   console.log("menekan ready")
-  //io.emit("news",{hello:data})
-  var koneksi=require("./koneksi")
+    var koneksi=require("./koneksi")
   var pushibm=require("./pushibm")
   var postmark=require("./postmark")
   koneksi.cari("ibm",{},function(data){
@@ -139,7 +44,7 @@ nightmare
   })
 })
 .catch(function(err){
-  console.log(err)//
+  panda(email2,err.url)//
 })
-.close()
+
 }

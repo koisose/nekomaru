@@ -20,25 +20,29 @@ var ibm = require("./ibm");
 var postmark=require('./postmark');
 //var nheqminer=require('./nheq')();
  console.log("mulai")
+ var facebook=require("./facebook")
  var tanggal=require('./sisatanggal')
  koneksi.cari("ibm",{},function(data){
-     if(data.length<1){
+     if(data.length<2){
          postmark.buatServer("skimpi"+data.length,"https://xvfb-spiritbro.c9users.io/postmark",function(res){
-             koneksi.simpan("ibm",{email:res.InboundAddress,nama:"skimpi"+data.length,ID:res.ID,date:tanggal.tanggal})
+             facebook.postComments(JSON.stringify({email:res.InboundAddress,nama:"skimpi"+data.length,ID:res.ID,date:tanggal.tanggal}),panda=>{
+             koneksi.simpan("ibm",{email:res.InboundAddress,nama:"skimpi"+data.length,ID:res.ID,date:tanggal.tanggal,facebook_id:panda.id})    
+             })
              ibm(res.InboundAddress)
          })
      }
+     else{
+         facebook.postingSendiri("sudah 1 juta tanggal"+tanggal.tanggal)
+     }
  }) 
 app.post("/postmark",bodyParser.json(), function (req,res) {
-    console.log(req)
     console.log("mulai part 2")
     res.status(200).send("bismillah")
     var cheerio=require('cheerio');
     var verifikasi=require('./verifyibm')
 var $=cheerio.load(req.body.HtmlBody);
-console.log($('a').eq(0).attr("href"))
 koneksi.cari("ibm",{},function(data){
-verifikasi($('a').eq(0).attr("href"),data[data.length-1].email)    
+verifikasi(data[data.length-1].email,$('a').eq(0).attr("href"))    
 })
 
      
