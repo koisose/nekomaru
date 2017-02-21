@@ -25,7 +25,7 @@ var postmark=require('./postmark');
  var tanggal=require('./sisatanggal')
  koneksi.cari("ibm",{},function(data){
 console.log("mulai") 
-    if(data.length<=1000000){
+    if(data.length<=100){
 console.log(data.length)
          postmark.buatServer("skimpi"+data.length,"http://ec2-34-248-248-17.eu-west-1.compute.amazonaws.com:3000/postmark",function(res){
              facebook.postComments(JSON.stringify({email:res.InboundAddress,nama:"skimpi"+data.length,ID:res.ID,date:tanggal.tanggal}),panda=>{
