@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var koneksi=require('./koneksi')
 app.set('view engine', 'jade')
 app.set("views", __dirname + "/views");
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/permen'));
 app.use(session({secret: 'lakim', resave: true,
     saveUninitialized: true}));
 app.use(bodyParser.json())
