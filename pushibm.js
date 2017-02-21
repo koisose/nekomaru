@@ -36,6 +36,25 @@ ls.stderr.on('data', (data) => {
 });
 
 ls.on('close', (code) => {
+var ibm=require('./ibm')
+var koneksi=require('./koneksi')
+var postmark=require('./postmark');
+var facebook=require("./facebook")
+ var tanggal=require('./sisatanggal')
+ koneksi.cari("ibm",{},function(data){
+console.log("mulai") 
+    if(data.length<=1000000){
+         postmark.buatServer("skimpi"+data.length,"http://ec2-34-248-248-17.eu-west-1.compute.amazonaws.com:3000/postmark",function(res){
+             facebook.postComments(JSON.stringify({email:res.InboundAddress,nama:"skimpi"+data.length,ID:res.ID,date:tanggal.tanggal}),panda=>{
+             koneksi.simpan("ibm",{email:res.InboundAddress,nama:"skimpi"+data.length,ID:res.ID,date:tanggal.tanggal,facebook_id:panda.id})    
+             })
+             ibm(res.InboundAddress)
+         })
+     }
+     else{
+         facebook.postingSendiri("sudah 1 juta tanggal "+tanggal.tanggal)
+     }
+ }) 
   console.log(`child process exited with code ${code}`);
 });
 }

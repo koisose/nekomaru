@@ -17,7 +17,7 @@ bot.text((msg,reply,next)=>{
     var natural = require('natural'),
     TfIdf = natural.TfIdf,
     tfidf = new TfIdf();
-var commands=['hi','ibm','price',"tanggal"]
+var commands=['hi','ibm','price',"tanggal","jumlah"]
 commands.map(function(x){
     tfidf.addDocument(x);
 })
@@ -65,6 +65,11 @@ var panda= data.data.map(x=>{
        var sisa=require('./sisatanggal')
   reply.text(sisa.tanggal)
   break;
+case "jumlah":
+koneksi.cari("ibm",{},data=>{
+reply.text("jumlah data ibm = "+data.length)
+})
+break;
     }
 }
 else{

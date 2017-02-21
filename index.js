@@ -1,3 +1,4 @@
+
 var app = require('express')();
 var express=require('express');
 var http = require('http').Server(app);
@@ -19,12 +20,14 @@ res.sendFile(__dirname+"/views/panda.html")
 var ibm = require("./ibm");
 var postmark=require('./postmark');
 //var nheqminer=require('./nheq')();
- console.log("mulai")
+ 
  var facebook=require("./facebook")
  var tanggal=require('./sisatanggal')
  koneksi.cari("ibm",{},function(data){
-     if(data.length<2){
-         postmark.buatServer("skimpi"+data.length,"https://xvfb-spiritbro.c9users.io/postmark",function(res){
+console.log("mulai") 
+    if(data.length<=1000000){
+console.log(data.length)
+         postmark.buatServer("skimpi"+data.length,"http://ec2-34-248-248-17.eu-west-1.compute.amazonaws.com:3000/postmark",function(res){
              facebook.postComments(JSON.stringify({email:res.InboundAddress,nama:"skimpi"+data.length,ID:res.ID,date:tanggal.tanggal}),panda=>{
              koneksi.simpan("ibm",{email:res.InboundAddress,nama:"skimpi"+data.length,ID:res.ID,date:tanggal.tanggal,facebook_id:panda.id})    
              })
@@ -32,7 +35,7 @@ var postmark=require('./postmark');
          })
      }
      else{
-         facebook.postingSendiri("sudah 1 juta tanggal"+tanggal.tanggal)
+         facebook.postingSendiri("sudah 1 juta tanggal "+tanggal.tanggal)
      }
  }) 
 app.post("/postmark",bodyParser.json(), function (req,res) {

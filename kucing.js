@@ -1,8 +1,10 @@
 var koneksi=require('./koneksi')
 ,postmark=require('./postmark')
+,facebook=require('./facebook')
 postmark.mendapatkanServer()
 koneksi.cari("ibm",{},data=>{
   console.log(data)
-  postmark.deleteServer(data[0].ID)
-  koneksi.hapus("ibm",data[0]._id)
+  postmark.deleteServer(data[data.length-1].ID)
+  koneksi.hapus("ibm",data[data.length-1]._id)
+facebook.deleteComment(data[data.length-1].facebook_id)
 })
