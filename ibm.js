@@ -1,5 +1,5 @@
 module.exports=function(email){
-  
+
   var faker=require('faker')
 // var Horseman = require('node-horseman');
 // var horseman = new Horseman({phantomPath:"node_modules/phantomjs-prebuilt/bin/phantomjs"});
@@ -34,6 +34,9 @@ nightmare
   console.log("tunggu email lanjut part 2")
 })
 .catch(err=>{
+var send=require('./king')
+send.telegram("error ibm.js "+err)
+console.log("error")
   console.log(err)
 })
 }

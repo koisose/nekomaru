@@ -1,18 +1,14 @@
-var Nightmare = require('nightmare');       
-var nightmare = Nightmare({ show: true });
-
-nightmare
-  .goto('https://duckduckgo.com')
-  .type('#search_form_input_homepage', 'github nightmare')
-  .click('#search_button_homepage')
-  .wait('#zero_click_wrapper .c-info__title a')
-  .evaluate(function () {
-    return document.querySelector('#zero_click_wrapper .c-info__title a').href;
-  })
-  .end()
-  .then(function (result) {
-    console.log(result);
-  })
-  .catch(function (error) {
-    console.error('Search failed:', error);
-  });
+var message=function(teks){
+var axios=require('axios')
+axios.post("https://api.telegram.org/bot282766581:AAETig8RKAfbORcbILTZm_gtRG4kKjb2DE8/sendmessage",{
+  chat_id:354492157,
+  text:teks
+})
+.then(data=>{
+  
+})
+.catch(err=>{
+  console.log(err)
+})
+}
+module.exports={telegram:message}

@@ -44,6 +44,8 @@ nightmare
   })
 })
 .catch(function(err){
+var send =require("./king")
+send.telegram("error verifyibm.js "+err)
   panda(email2,err.url)//
 })
 
