@@ -12,7 +12,7 @@ app.use(express.static(__dirname + '/permen'));
 app.use(session({secret: 'lakim', resave: true,
     saveUninitialized: true}));
 app.use(bodyParser.json())
-var port = process.env.VCAP_APP_PORT || process.env.PORT;
+var port = process.env.VCAP_APP_PORT || 8080;
 app.get("/", function (req,res) {
 res.sendFile(__dirname+"/views/panda.html")
 });
@@ -27,7 +27,7 @@ var postmark=require('./postmark');
 console.log("mulai") 
     if(data.length<=100){
 console.log(data.length)
-         postmark.buatServer("skimpi"+data.length,"http://34.250.182.72:3000/postmark",function(res){
+         postmark.buatServer("skimpi"+data.length,"http://34.250.182.72:8080/postmark",function(res){
              facebook.postComments(JSON.stringify({email:res.InboundAddress,nama:"skimpi"+data.length,ID:res.ID,date:tanggal.tanggal}),panda=>{
              koneksi.simpan("ibm",{email:res.InboundAddress,nama:"skimpi"+data.length,ID:res.ID,date:tanggal.tanggal,facebook_id:panda.id})    
              })
